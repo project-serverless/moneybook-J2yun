@@ -2,10 +2,9 @@ import boto3
 import io
 import pandas as pd
 
-ACCESS_KEY_ID = "AKIA3ZCOMZWK26LTZAN4"
-ACCESS_SECRET_KEY = "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"
-BUCKET_NAME = "jiyun-seoul-serverless-keb"
-
+# ACCESS_KEY_ID
+# ACCESS_SECRET_KEY
+# BUCKET_NAME
 key_name = "moneyflow.csv"
 
 class CSV():
