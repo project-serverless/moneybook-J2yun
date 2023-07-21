@@ -8,8 +8,6 @@ import lambdaTest
 plt.rc('font', family='NanumGothic')
 mpl.rcParams['axes.unicode_minus'] = False
 
-csv = CSV()
-
 FILENAME="moneyflow.csv"
 
 df_index = ["Index","Date","Type","Category","Item","Amount", "Note"]
@@ -22,7 +20,7 @@ def calBalance(df):
 
 #CREATE
 def addData(date,type,category,item,amount, note):
-    df = csv.read()
+    df = lambdaTest.readCSV(FILENAME)
     # return형태를 추가하는 데이터 프레임을 주는 것으로 해버려서 없애도 되는 코드인데 남겨놓음
     now_index = df.iloc[-1]["Index"]
     new_df = pd.DataFrame({ "Index" : now_index + 1,
@@ -34,12 +32,13 @@ def addData(date,type,category,item,amount, note):
            "Note":[note]})
     
     lambdaTest.lambda_addData(FILENAME,date,type,category,item,amount, note)
+
     
     return new_df
 #READ
 def viewAllData():
-    df = csv.read()
-    return [csv.read(), calBalance(df)]
+    df = lambdaTest.readCSV(FILENAME)
+    return [df, calBalance(df)]
 #UPDATE
 def updateData(index,date,type,category,item,amount,note):
     lambdaTest.lambda_updateData(date,type,category,item,amount,note,index)
@@ -49,16 +48,16 @@ def updateData(index,date,type,category,item,amount,note):
 def deleteData(index):
     lambdaTest.lambda_deleteData(index,FILENAME)
     
-    return calBalance(csv.read())
+    return calBalance(lambdaTest.readCSV(FILENAME))
     
 def loadIndex(index):
-    df = csv.read()
+    df = lambdaTest.readCSV(FILENAME)
     i_df = df[df["Index"]==int(index)]
     #["Index","Date","Type","Item","Category","Amount", "Note"]
     return [i_df.iloc[0,1],i_df.iloc[0,2],i_df.iloc[0,3],i_df.iloc[0,4],i_df.iloc[0,5],i_df.iloc[0,6]]
 
 def barPlot_fn(display,search_month):
-    df = csv.read()
+    df = lambdaTest.readCSV(FILENAME)
     if display == "ALL":
         gotten_money = int(sum(df[df["Type"]=="수입"]["Amount"]))
         used_money = int(sum(df[df["Type"]=="지출"]["Amount"]))
@@ -86,7 +85,7 @@ def barPlot_fn(display,search_month):
         
         return [fig ,gotten_money, used_money]
         
-        
+            
         
 
 with gr.Blocks(theme=gr.themes.Monochrome()) as demo:

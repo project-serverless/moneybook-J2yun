@@ -27,10 +27,20 @@ export class MoneyBookLambdaStack extends cdk.Stack {
 
         // index.py -> lambda_handler
         //
-        new PythonFunction(this, `${SYSTEM_NAME}-create-file`, {
-            functionName: `${getAccountUniqueName(props.context)}-create-file`,
-            entry: path.join(__dirname, '../../../../app/backend/create-file'),
-            index: 'create_file.py',
+        new PythonFunction(this, `${SYSTEM_NAME}-handle-file`, {
+            functionName: `${getAccountUniqueName(props.context)}-handle-file`,
+            entry: path.join(__dirname, '../../../../app/backend/handle-file'),
+            index: 'handle-file.py',
+            runtime: Runtime.PYTHON_3_10,
+            role: lambdaRole,
+            environment: {
+                'BUCKET_NAME': props.s3Stack!.bucket.bucketName,
+            }
+        })
+        new PythonFunction(this, `${SYSTEM_NAME}-read-csv`, {
+            functionName: `${getAccountUniqueName(props.context)}-read-csv`,
+            entry: path.join(__dirname, '../../../../app/backend/read-csv'),
+            index: 'read-csv.py',
             runtime: Runtime.PYTHON_3_10,
             role: lambdaRole,
             environment: {

@@ -55,3 +55,20 @@ def lambda_updateData(file_name,date,type,category,item,amount,note,index):
                             "index" : index
                         })
                     )
+    
+def readCSV(file_name):
+    lambda_client = boto3.client('lambda')
+    response = lambda_client.invoke(FunctionName='readCSVfile',
+                        InvocationType='RequestResponse',
+                        Payload=json.dumps({
+                            "filename": file_name,
+                        })
+    )
+    
+    response_payload = response['Payload'].read().decode('utf-8')
+    dic_response = json.loads(response_payload)
+    data = json.loads(dic_response['body'])
+    df = pd.DataFrame(data)
+    return df
+
+readCSV(key_name)
