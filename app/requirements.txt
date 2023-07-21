@@ -4,5 +4,6 @@ gradio==3.36.1
 gradio_client==0.2.8
 matplotlib==3.7.2
 pandas==2.0.3
+python-dotenv==1.0.0
 
 Python 3.11.4
