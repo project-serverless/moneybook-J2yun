@@ -8,6 +8,7 @@ import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import * as path from "path";
 import { ManagedPolicy, Role, ServicePrincipal, CompositePrincipal, PolicyDocument, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
+import { Timeout } from 'aws-cdk-lib/aws-stepfunctions';
 
 export class MoneyBookLambdaStack extends cdk.Stack {
 
@@ -23,6 +24,7 @@ export class MoneyBookLambdaStack extends cdk.Stack {
                 ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
                 ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
             ]
+            
         })
 
         // index.py -> lambda_handler
