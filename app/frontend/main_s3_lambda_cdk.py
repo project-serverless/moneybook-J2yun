@@ -14,6 +14,7 @@ df_index = ["Index","Date","Type","Category","Item","Amount", "Note"]
 category_list = ["식비","카페","교통비","생일선물","용돈"]
 
 def calBalance(df):
+    df = lambdaTest.readCSV(FILENAME)
     used_money = int(sum(df[df["Type"]=="지출"]["Amount"]))
     gotten_money = int(sum(df[df["Type"]=="수입"]["Amount"]))
     return gotten_money - used_money

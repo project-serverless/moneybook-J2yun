@@ -13,7 +13,7 @@ key_name = "moneyflow.csv"
 def lambda_addData(file_name,date,type,category,item,amount,note):
 
     lambda_client = boto3.client('lambda')
-    lambda_client.invoke(FunctionName='AccountBook-addData',
+    lambda_client.invoke(FunctionName='alex6-ICN-handle-file',
                         InvocationType='RequestResponse',
                         Payload=json.dumps({
                             "CRUD" : "CREATE",
@@ -29,7 +29,7 @@ def lambda_addData(file_name,date,type,category,item,amount,note):
 
 def lambda_deleteData(index,file_name):
     lambda_client = boto3.client('lambda')
-    lambda_client.invoke(FunctionName='AccountBook-addData',
+    lambda_client.invoke(FunctionName='alex6-ICN-handle-file',
                         InvocationType='RequestResponse',
                         Payload=json.dumps({
                             "CRUD" : "DELETE",
@@ -41,7 +41,7 @@ def lambda_deleteData(index,file_name):
 def lambda_updateData(file_name,date,type,category,item,amount,note,index):
 
     lambda_client = boto3.client('lambda')
-    lambda_client.invoke(FunctionName='AccountBook-addData',
+    lambda_client.invoke(FunctionName='alex6-ICN-handle-file',
                         InvocationType='RequestResponse',
                         Payload=json.dumps({
                             "CRUD" : "UPDATE",
@@ -58,7 +58,7 @@ def lambda_updateData(file_name,date,type,category,item,amount,note,index):
     
 def readCSV(file_name):
     lambda_client = boto3.client('lambda')
-    response = lambda_client.invoke(FunctionName='readCSVfile',
+    response = lambda_client.invoke(FunctionName='alex6-ICN-read-csv',
                         InvocationType='RequestResponse',
                         Payload=json.dumps({
                             "filename": file_name,
