@@ -4,8 +4,8 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { getAccountUniqueName } from "../config/accounts";
 import { MoneyBookJiyunStackProps } from "../money_book_jiyun-stack";
 import { SYSTEM_NAME } from "../config/commons";
-import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
-import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { PythonFunction, PythonLayerVersion } from '@aws-cdk/aws-lambda-python-alpha';
+import { Runtime, LayerVersion } from 'aws-cdk-lib/aws-lambda';
 import * as path from "path";
 import { ManagedPolicy, Role, ServicePrincipal, CompositePrincipal, PolicyDocument, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Timeout } from 'aws-cdk-lib/aws-stepfunctions';
@@ -37,7 +37,13 @@ export class MoneyBookLambdaStack extends cdk.Stack {
             role: lambdaRole,
             environment: {
                 'BUCKET_NAME': props.s3Stack!.bucket.bucketName,
-            }
+            },
+            timeout: cdk.Duration.seconds(10),
+            memorySize: 256,
+            handler: "lambda_handler",
+            layers: [LayerVersion.fromLayerVersionArn(this,"pandasLayer-handle-file",
+                "arn:aws:lambda:ap-northeast-2:336392948345:layer:AWSSDKPandas-Python310:3" )],
+            
         })
         new PythonFunction(this, `${SYSTEM_NAME}-read-csv`, {
             functionName: `${getAccountUniqueName(props.context)}-read-csv`,
@@ -47,7 +53,12 @@ export class MoneyBookLambdaStack extends cdk.Stack {
             role: lambdaRole,
             environment: {
                 'BUCKET_NAME': props.s3Stack!.bucket.bucketName,
-            }
+            },
+            timeout: cdk.Duration.seconds(10),
+            memorySize: 256,
+            handler: "lambda_handler",
+            layers: [LayerVersion.fromLayerVersionArn(this,"pandasLayer-read-csv",
+            "arn:aws:lambda:ap-northeast-2:336392948345:layer:AWSSDKPandas-Python310:3" )],
         })
     }
 }

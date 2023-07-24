@@ -2,7 +2,6 @@ import gradio as gr
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from botoTest import CSV
 import lambdaTest
 
 plt.rc('font', family='NanumGothic')

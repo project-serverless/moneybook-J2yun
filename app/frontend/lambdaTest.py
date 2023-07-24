@@ -70,5 +70,3 @@ def readCSV(file_name):
     data = json.loads(dic_response['body'])
     df = pd.DataFrame(data)
     return df
-
-readCSV(key_name)
