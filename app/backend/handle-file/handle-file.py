@@ -4,7 +4,7 @@ import pandas as pd
 import boto3
 
 def lambda_handler(event, context):
-    BUCKET_NAME="jiyun-seoul-serverless-keb"
+    BUCKET_NAME="alex6-ICN-moneybook-bucket"
     crud = event["CRUD"]
     
     if crud=="CREATE":

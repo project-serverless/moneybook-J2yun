@@ -4,7 +4,7 @@ import io
 import pandas as pd
 
 def lambda_handler(event, context):
-    BUCKET_NAME="jiyun-seoul-serverless-keb"
+    BUCKET_NAME="alex6-ICN-moneybook-bucket"
     session = boto3.Session()
     s3 = session.client('s3')
     filename = event['filename']
